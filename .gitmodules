@@ -1,0 +1,6 @@
+[submodule "platform-backend"]
+	path = platform-backend
+	url = git@github.com:RotoyDK/platform-backend.git
+[submodule "platform-frontend"]
+	path = platform-frontend
+	url = git@github.com:RotoyDK/platform-frontend.git
