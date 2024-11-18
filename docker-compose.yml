@@ -1,0 +1,53 @@
+version: "3.9"
+
+services:
+  rotoyapp:
+    container_name: rotoyapp
+    image: rotoyapp.azurecr.io/rotoyapp:latest
+    env_file:
+      - .env
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      - phpmyadmin
+    networks:
+      - app-network
+
+  db:
+    image: mysql:8
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: t1Le%2Aox2X54%5B
+      MYSQL_DATABASE: rotoy_parent_child_db
+      MYSQL_USER: rotoy
+      MYSQL_PASSWORD: t1Le%2Aox2X54%5B
+
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - app-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: t1Le%2Aox2X54%5B
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+volumes:
+  db_data:
+
+networks:
+  app-network:
+    driver: bridge
