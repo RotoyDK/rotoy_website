@@ -1,17 +1,31 @@
 version: "3.9"
 
 services:
-  rotoyapp:
-    container_name: rotoyapp
-    image: rotoyapp.azurecr.io/rotoyapp:latest
+  frontend:
+    container_name: frontend
+    image: rotoyapp.azurecr.io/frontend:latest
+    build:
+      context: ./platform-frontend
     env_file:
-      - .env
-    build: .
+      - ./platform-frontend/.env
     ports:
       - "3000:3000"
     depends_on:
+      - backend
+    networks:
+      - app-network
+
+  backend:
+    container_name: backend
+    image: rotoyapp.azurecr.io/backend:latest
+    build:
+      context: ./platform-backend
+    env_file:
+      - ./platform-backend/.env
+    ports:
+      - "4001:4001"
+    depends_on:
       - db
-      - phpmyadmin
     networks:
       - app-network
 
@@ -23,7 +37,6 @@ services:
       MYSQL_DATABASE: rotoy_parent_child_db
       MYSQL_USER: rotoy
       MYSQL_PASSWORD: t1Le%2Aox2X54%5B
-
     volumes:
       - db_data:/var/lib/mysql
     ports:
@@ -51,3 +64,5 @@ volumes:
 networks:
   app-network:
     driver: bridge
+
+
