@@ -12,6 +12,8 @@ services:
       - "3000:3000"
     depends_on:
       - backend
+    environment:
+      - PORT=3000
     networks:
       - app-network
 
@@ -40,12 +42,13 @@ services:
     volumes:
       - db_data:/var/lib/mysql
     ports:
-      - "3306:3306"
+      - "3307:3306"
     networks:
       - app-network
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
+    platform: linux/amd64
     container_name: phpmyadmin
     environment:
       PMA_HOST: db
@@ -64,5 +67,3 @@ volumes:
 networks:
   app-network:
     driver: bridge
-
-
