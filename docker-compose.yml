@@ -35,7 +35,7 @@ services:
     image: mysql:8
     container_name: mysql_db
     environment:
-      MYSQL_ROOT_PASSWORD: ""  # No password for root
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       MYSQL_DATABASE: rotoy_parent_child_db
     volumes:
       - db_data:/var/lib/mysql
