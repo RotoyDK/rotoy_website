@@ -20,6 +20,7 @@ services:
     image: rotoyapp.azurecr.io/backend:latest
     build:
       context: ./platform-backend
+      dockerfile: Dockerfile
     env_file:
       - ./platform-backend/.env
     ports:
