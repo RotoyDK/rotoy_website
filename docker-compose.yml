@@ -14,6 +14,8 @@ services:
       - backend
     environment:
       - PORT=3000
+      - WEBSITES_PORT=3000
+
     networks:
       - app-network
 
