@@ -4,6 +4,8 @@ services:
     image: rotoyapp.azurecr.io/frontend:latest
     build:
       context: ./platform-frontend
+      ssh: 
+        default: "true"
     env_file:
       - ./platform-frontend/.env
     ports:
@@ -20,6 +22,8 @@ services:
     image: rotoyapp.azurecr.io/backend:latest
     build:
       context: ./platform-backend
+      ssh: 
+        default: "true"
       dockerfile: Dockerfile
     env_file:
       - ./platform-backend/.env
@@ -27,6 +31,8 @@ services:
       - "8181:8181"
     depends_on:
       - db
+    environment:
+      - PORT=8181
     networks:
       - app-network
 
