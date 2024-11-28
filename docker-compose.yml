@@ -5,7 +5,7 @@ services:
     build:
       context: ./platform-frontend
       ssh: 
-        default: "true"
+        ["true"]
     env_file:
       - ./platform-frontend/.env
     ports:
@@ -24,8 +24,8 @@ services:
     image: rotoyapp.azurecr.io/backend:latest
     build:
       context: ./platform-backend
-      ssh: 
-        default: "true"
+      ssh:
+        ["true"]
       dockerfile: Dockerfile
     env_file:
       - ./platform-backend/.env
