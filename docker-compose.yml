@@ -5,7 +5,7 @@ services:
     build:
       context: ./platform-frontend
       ssh: 
-        ["true"]
+        default: "true"
     env_file:
       - ./platform-frontend/.env
     ports:
@@ -25,7 +25,7 @@ services:
     build:
       context: ./platform-backend
       ssh:
-        ["true"]
+        default: "true"
       dockerfile: Dockerfile
     env_file:
       - ./platform-backend/.env
