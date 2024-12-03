@@ -1,21 +1,25 @@
+---
+version: "3.9"
 services:
   frontend:
     container_name: frontend
     image: rotoyapp.azurecr.io/frontend:latest
     build:
       context: ./platform-frontend
-    env_file:
-      - ./platform-frontend/.env
     ports:
       - "3000:3000"
     depends_on:
       - backend
     environment:
-      - PORT=3000
-      - WEBSITES_PORT=3000
-
-    networks:
-      - app-network
+      COMMUNICATION_SERVICES_CONNECTION_STRING: "endpoint=https://rotoycommunicationservice.europe.communication.azure.com/;accesskey=Kcque8ko1Ms3J2LXZgR9wqTW54l4QJGMF/1P/lhfTZBT8y7faafzxs48XHxsjaAZ3yxrxpUHDGjzz+9j1Rzh3w=="
+      CRYPTO_JS_SECRET: "5d46aa7b2aaf37f9a4b50cffa89f945b88e66eb103746582698d3822489f253c"
+      LOCAL_PORT: 3004
+      NEXTAUTH_SECRET: "cjhwabcg27834ynwvhjfhbv27bnfhvcsbfc827csiybft2856cnh87fsifvhn82aju"
+      NEXTAUTH_URL: "https://frontend.redocean-a8e3f4c4.northeurope.azurecontainerapps.io"
+      NEXT_PUBLIC_BASE_URL: "https://backend.redocean-a8e3f4c4.northeurope.azurecontainerapps.io/v1/"
+      PORT: 3000
+      SECRET_KEY: "cbn8s76rtebs734yfhsvb98274ybnvsir57yv5487wvnxjvfuybs87rincfxjf7wh578nyvddiu"
+      WEBSITES_PORT: 3000
 
   backend:
     container_name: backend
@@ -23,29 +27,31 @@ services:
     build:
       context: ./platform-backend
       dockerfile: Dockerfile
-    env_file:
-      - ./platform-backend/.env
     ports:
       - "8181:8181"
     depends_on:
       - db
     environment:
-      - PORT=8181
-    networks:
-      - app-network
+      ACTIVATION_CODE_FLAG: "true"
+      API_VERSION: 1
+      COMMUNICATION_SERVICES_CONNECTION_STRING: "endpoint=https://rotoycommunicationservice.europe.communication.azure.com/;accesskey=Kcque8ko1Ms3J2LXZgR9wqTW54l4QJGMF/1P/lhfTZBT8y7faafzxs48XHxsjaAZ3yxrxpUHDGjzz+9j1Rzh3w=="
+      DATABASE_URL: "mysql://root@db.redocean-a8e3f4c4.northeurope.azurecontainerapps.io:3306/rotoy_parent_child_db"
+      FRONTEND_URL: "https://frontend.redocean-a8e3f4c4.northeurope.azurecontainerapps.io"
+      JWT_EXPIRES_IN: "1d"
+      JWT_SECRET_KEY: "cbn8s76rtebs734yfhsvb98274ybnvsir57yv5487wvnxjvfuybs87rincfxjf7wh578nyvddiu"
+      NEXT_PUBLIC_BASE_URL: "https://backend.redocean-a8e3f4c4.northeurope.azurecontainerapps.io/v1/"
+      PORT: 8181
+      DB_HOST: db
+      DB_PORT: 3306
 
   db:
     image: mysql:8
-    container_name: mysql_db
+    container_name: mysqldb
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      MYSQL_DATABASE: rotoy_parent_child_db
-    volumes:
-      - db_data:/var/lib/mysql
+      MYSQL_DATABASE: "rotoy_parent_child_db"
     ports:
-      - "3307:3306"
-    networks:
-      - app-network
+      - "3306:3306"  # Adjusted for default MySQL port exposure
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -57,12 +63,3 @@ services:
       - "8080:80"
     depends_on:
       - db
-    networks:
-      - app-network
-
-volumes:
-  db_data:
-
-networks:
-  app-network:
-    driver: bridge
