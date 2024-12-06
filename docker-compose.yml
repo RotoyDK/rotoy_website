@@ -1,5 +1,4 @@
 ---
-version: "3.9"
 services:
   frontend:
     container_name: frontend
@@ -35,7 +34,7 @@ services:
       ACTIVATION_CODE_FLAG: "true"
       API_VERSION: 1
       COMMUNICATION_SERVICES_CONNECTION_STRING: "endpoint=https://rotoycommunicationservice.europe.communication.azure.com/;accesskey=Kcque8ko1Ms3J2LXZgR9wqTW54l4QJGMF/1P/lhfTZBT8y7faafzxs48XHxsjaAZ3yxrxpUHDGjzz+9j1Rzh3w=="
-      DATABASE_URL: "mysql://root@db.redocean-a8e3f4c4.northeurope.azurecontainerapps.io:3306/rotoy_parent_child_db"
+      DATABASE_URL: "mysql://root:@db.internal.redocean-a8e3f4c4.northeurope.azurecontainerapps.io:3306/rotoy_parent_child_db"
       FRONTEND_URL: "https://frontend.redocean-a8e3f4c4.northeurope.azurecontainerapps.io"
       JWT_EXPIRES_IN: "1d"
       JWT_SECRET_KEY: "cbn8s76rtebs734yfhsvb98274ybnvsir57yv5487wvnxjvfuybs87rincfxjf7wh578nyvddiu"
